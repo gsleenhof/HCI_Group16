@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Campus Events</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prevents scrolling */
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #C4CFF1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  #content {
+    width: 100vw; /* Viewport width */
+    height: 100vh; /* Viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #circle {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 255, 0.5);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10; /* Ensure circle is above other content */
+  }
+  .flex-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+  }
+  .flex-container > div {
+    flex-grow: 1;
+    align-items: center;
+  }
+  #left, #right {
+    width: 50px; /* or any other width */
+    position: absolute;
+  }
+  .side-text {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Align center vertically */
+  }
+  
+  #left {
+    left: 25px; /* 25px margin from the left side */
+  }
+  
+  #right {
+    right: 25px; /* 25px margin from the right side */
+  }
+  
+  #bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+</style>
+<script>
+  // Initial application state
+  var currentState = 'title'; // 'title', 'instructions', 'question1', 'question2', 'summary'
+  var userAnswers = { weekdayOrWeekend: null, onCampus: null };
+  var middleTimer = 0;
+  var sideTimer = 0;
+  var leftTimer = 0;
+  var rightTimer = 0;
+  let circlePosition = 50; // Starting at 50 (middle of the screen)
+  
+  // Update and display content based on current state
+  function setContent(content) {
+    document.getElementById('content').innerHTML = content;
+  }
+  
+  function resetTimers() {
+    console.log("hitting resetTimers")
+    middleTimer = 0;
+    sideTimer = 0;
+    leftTimer = 0;
+    rightTimer = 0;
+  }
+  
+  function resetToTitle() {
+    currentState = 'title';
+    userAnswers = { weekdayOrWeekend: null, onCampus: null };
+    resetTimers();
+    displayTitleScreen();
+  }
+  
+  // Display functions for each screen
+  function displayTitleScreen() {
+    setContent('<h1>Do You Want to Find Some Events on Campus?</h1><h2>Stand still in the middle to start</h2>');
+  }
+  
+  function displayInstructionsScreen() {
+    setContent('<h1>Instructions: Stand in the position according to your answers</h1>' +
+               '<h2>Do you understand the instructions?</h2>' +
+               '<p class="side-text" id="left">Yes</p>' +
+               '<p class="side-text" id="right">No</p>' +
+               '<p id="bottom">Leave screen to restart</p>');
+  }
+  
+  function displayQuestion1Screen() {
+    setContent('<h1>Are you free on weekday nights, or weekends?</h1>' +
+               '<p class="side-text" id="left">Weekdays</p>' +
+               '<p class="side-text" id="right">Weekends</p>');
+  }
+  
+  function displayQuestion2Screen() {
+    setContent('<h1>Do you need the event to be on campus?</h1>' +
+               '<p class="side-text" id="left">Yes</p>' +
+               '<p class="side-text" id="right">No</p>');
+  }
+  
+  function displaySummaryScreen() {
+    setContent('<h1>Summary of Your Answers</h1>' +
+               `<p>Free on: ${userAnswers.weekdayOrWeekend === 'weekday' ? 'Weekday Nights' : 'Weekends'}</p>` +
+               `<p>Needs to be on campus: ${userAnswers.onCampus}</p>` +
+               '<p>Restart the quiz by moving out of answer range</p>');
+  }
+  
+  // Handle user movement and state transitions
+  function checkPosition() {
+    console.log(currentState);
+    console.log(middleTimer, sideTimer, leftTimer, rightTimer)
+    switch (currentState) {
+      case 'title':
+        if (circlePosition >= 40 && circlePosition <= 60) {
+          sideTimer = 0;
+          middleTimer++;
+          if (middleTimer >= 10) {
+            currentState = 'instructions';
+            displayInstructionsScreen();
+            resetTimers();
+          }
+        } else {
+          resetTimers();
+        }
+        break;
+      case 'instructions':
+        if (circlePosition < 50 && circlePosition > 10) {
+          leftTimer++;
+          rightTimer = 0;
+          sideTimer = 0;
+          if (leftTimer >= 10) {
+            currentState = 'question1';
+            displayQuestion1Screen();
+            resetTimers();
+          }
+        } else if (circlePosition > 50 && circlePosition < 90) {
+          rightTimer++;
+          leftTimer = 0;
+          sideTimer = 0;
+          if (rightTimer >= 10) {
+            resetToTitle();
+          }
+        } else {
+          sideTimer++;
+          leftTimer = 0;
+          rightTimer = 0;
+          if (sideTimer >= 10) {
+            resetToTitle();
+          }
+        }
+        break;
+      case 'question1':
+        if (circlePosition < 50 && circlePosition > 10) {
+          leftTimer++;
+          rightTimer = 0;
+          sideTimer = 0;
+          if (leftTimer >= 10) {
+            userAnswers = { ...userAnswers, weekdayOrWeekend: 'weekday' };
+            currentState = 'question2';
+            displayQuestion2Screen();
+            resetTimers();
+          }
+        } else if (circlePosition > 50 && circlePosition < 90) {
+          rightTimer++;
+          leftTimer = 0;
+          sideTimer = 0;
+          if (rightTimer >= 10) {
+            userAnswers = { ...userAnswers, weekdayOrWeekend: 'weekend' };
+            currentState = 'question2';
+            displayQuestion2Screen();
+            resetTimers();
+          }
+        } else {
+          sideTimer++;
+          leftTimer = 0;
+          rightTimer = 0;
+          if (sideTimer >= 10) {
+            resetToTitle();
+          }
+        }
+        break;
+      case 'question2':
+        if (circlePosition < 50 && circlePosition > 10) {
+          leftTimer++;
+          rightTimer = 0;
+          sideTimer = 0;
+          if (leftTimer >= 10) {
+            userAnswers = { ...userAnswers, onCampus: 'yes' };
+            currentState = 'summary';
+            displaySummaryScreen();
+            resetTimers();
+          }
+        } else if (circlePosition > 50 && circlePosition < 90) {
+          rightTimer++;
+          leftTimer = 0;
+          sideTimer = 0;
+          if (rightTimer >= 10) {
+            userAnswers = { ...userAnswers, onCampus: 'no' };
+            currentState = 'summary';
+            displaySummaryScreen();
+            resetTimers();
+          }
+        } else {
+          sideTimer++;
+          leftTimer = 0;
+          rightTimer = 0;
+          if (sideTimer >= 10) {
+            resetToTitle();
+          }
+        }
+        break;
+      case 'summary':
+        if (circlePosition < 10 || circlePosition > 90) {
+          sideTimer++;
+          leftTimer = 0;
+          rightTimer = 0;
+          if (sideTimer >= 10) {
+            resetToTitle();
+          }
+        } else {
+          sideTimer = 0;
+        }
+        break;
+      default:
+        resetToTitle();
+        break;
+    }
+    
+  }
+  
+  // Event listeners and intervals
+  document.addEventListener('mousemove', function(event) {
+    circlePosition = (event.clientX / window.innerWidth) * 100;
+    moveCircle(circlePosition);
+  });
+  
+  setInterval(function() {
+    checkPosition();
+    updateCircleContent(Math.max(middleTimer, sideTimer, leftTimer, rightTimer).toString());
+  }, 1000);
+  
+  function moveCircle(position) {
+    var screenWidth = window.innerWidth;
+    var circle = document.getElementById('circle');
+    circle.style.left = (position / 100) * screenWidth + 'px';
+  }
+  
+  function updateCircleContent(content) {
+    document.getElementById('circle').textContent = content;
+  }
+  </script>
+  
+
+</head>
+<body>
+
+<div id="content">
+  <h1>Do You Want to Find Some Events on Campus?</h1>
+  <h2>Stand still in the middle to start</h2>
+</div>
+<div id="circle">0</div>
+
+</body>
+</html>
