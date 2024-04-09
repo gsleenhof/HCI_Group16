@@ -6,6 +6,47 @@
 <title>Interactive Campus Events</title>
 <link rel="stylesheet" href="styles.css">
 <script>
+  
+  //Camera tracking and code. Commented out for now to test other aspects of the code.
+  /*var host = "cpsc484-02.stdusr.yale.internal:8888";
+
+  $(document).ready(function () {
+      frames.start();
+  });
+
+  var frames = {
+      socket: null,
+
+      start: function () {
+          var url = "ws://" + host + "/frames";
+          frames.socket = new WebSocket(url);
+          frames.socket.onmessage = function (event) {
+              frames.show(JSON.parse(event.data));
+          }
+      },
+
+      show: function (frame) {
+          //console.log(frame);
+          if (frame.people.length > 0) {
+            document.getElementById('circle').style.display = "block";
+            var person = frame.people[0];
+            var x = person.x_pos;
+            //console.log("person: ", person);
+            //console.log("x: ", x);
+            
+            circlePosition = (x + 2.5) * 20;
+            console.log("circlePosition: ", circlePosition);
+            moveCircle(circlePosition);
+          } else {
+            document.getElementById('circle').style.display = "none";}
+            circlePosition = 0;
+            //moveCircle(0);
+      }
+  };*/
+  
+  
+  
+  
   // Initial application state
   var currentState = 'title'; // 'title', 'instructions', 'question1', 'question2', 'summary'
   var userAnswers = { weekdayOrWeekend: null, onCampus: null };
@@ -202,6 +243,7 @@
   }, 1000);
   
   function moveCircle(position) {
+    console.log("position: ", position)
     var screenWidth = window.innerWidth;
     var circle = document.getElementById('circle');
     circle.style.left = (position / 100) * screenWidth + 'px';
