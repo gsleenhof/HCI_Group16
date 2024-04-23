@@ -38,20 +38,22 @@ body {
 }
 
 #circle {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 50%;
   position: absolute;
   top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10; /* Ensure circle is above other content */
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 5rem;
+  color: rgb(72, 72, 72);
 }
+
 
 .flex-container {
   width: 100%;
@@ -68,6 +70,7 @@ body {
 #left, #right {
   width: 50px; /* or any other width */
   position: absolute;
+  font-size: 50px;
 }
 
 .side-text {
@@ -77,11 +80,11 @@ body {
 }
 
 #left {
-  left: 25px; /* 25px margin from the left side */
+  left: 200px; /* 25px margin from the left side */
 }
 
 #right {
-  right: 25px; /* 25px margin from the right side */
+  right: 250px; /* 25px margin from the right side */
 }
 
 #bottom {
