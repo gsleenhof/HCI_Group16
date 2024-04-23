@@ -178,9 +178,8 @@
     if (filteredEvents.length <= 3) {
       console.log("selectedEvents: ", filteredEvents)
       console.log("events: ", filteredEvents)
-    }
-
-    else {
+      events = filteredEvents
+    } else {
       let items = filteredEvents.slice();
 
       for (let i = items.length - 1; i > 0; i--) {
