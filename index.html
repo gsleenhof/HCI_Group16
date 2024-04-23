@@ -31,14 +31,24 @@
     show: function (frame) {
         
         if (frame.people.length > 0) {
-            //console.log("People detected: ", frame.people)
-            //console.log("Person 1 Confidence: ", frame.people[0].joints[3].confidence);
-            //console.log("Person 1: ", frame.people[0].body_id);
-            //console.log("Person 2: ", frame.people[1]?.body_id);
-            document.getElementById('circle').style.display = "block";
-            var person = frame.people[0];
-            var x = person.x_pos;
-            positions.push(x); // Add the new position
+          var person = frame.people[0];
+            
+          if (frame.people.length > 1) {
+            console.log("More than one person detected. Please stand alone.")
+            person = frame.people.reduce(function(prev, curr) {
+              return prev.joints[2].position.z < curr.joints[2].position.z ? prev : curr;
+            });
+            console.log(person.body_id)
+          
+          }
+          console.log("People detected: ", frame.people[0])
+          //console.log("Person 1 Confidence: ", frame.people[0].joints[3].confidence);
+          //console.log("Person 1: ", frame.people[0].body_id);
+          //console.log("Person 2: ", frame.people[1]?.body_id);
+          document.getElementById('circle').style.display = "block";
+          //var person = frame.people[0];
+          var x = person.x_pos;
+          positions.push(x); // Add the new position
         } else {
             document.getElementById('circle').style.display = "none";
             positions.push(-2.5); // Add zero if no people detected
@@ -69,6 +79,7 @@
   var leftTimer = 0;
   var rightTimer = 0;
   var noUserTimer = 0;
+  var summaryTimer = 0;
   let circlePosition = 50; // Starting at 50 (middle of the screen)
   var events = [];
   
@@ -84,6 +95,7 @@
     leftTimer = 0;
     rightTimer = 0;
     noUserTimer = 0;
+    summaryTimer = 0;
   }
   
   function resetToTitle() {
@@ -137,6 +149,8 @@
 
     html += '</div>'; // Close card-container
     html += '<p>Restart the quiz by moving out of answer range</p>';
+    html += '<p>-OR-</p>';
+    html += `<p>Quiz will restart automatically in 10 seconds</p>`;
 
     setContent(html);
   }
@@ -180,6 +194,18 @@
     }
 
     if (noUserTimer >= 3) {
+      resetToTitle();
+      return
+    }
+
+    //`<p id="summaryTime">Quiz will restart automatically in ${10} seconds</p>`
+    if (currentState === "summary") {
+      summaryTimer++;
+    } else {
+      noUserTimer = 0;
+    }
+
+    if (summaryTimer >= 10) {
       resetToTitle();
       return
     }
@@ -325,6 +351,10 @@
   
   function updateCircleContent(content) {
     document.getElementById('circle').textContent = content;
+  }
+
+  function updateSummaryTimerContent(content) {
+    document.getElementById('timer').textContent = content;
   }
   </script>
   
