@@ -27,6 +27,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 50px;
   position: relative;  /* Ensures that absolutely positioned children relate to this container */
 }
 
