@@ -34,14 +34,14 @@
           var person = frame.people[0];
             
           if (frame.people.length > 1) {
-            console.log("More than one person detected. Please stand alone.")
+            //console.log("More than one person detected. Please stand alone.")
             person = frame.people.reduce(function(prev, curr) {
               return prev.joints[2].position.z < curr.joints[2].position.z ? prev : curr;
             });
             console.log(person.body_id)
           
           }
-          console.log("People detected: ", frame.people[0])
+          //console.log("People detected: ", frame.people[0])
           //console.log("Person 1 Confidence: ", frame.people[0].joints[3].confidence);
           //console.log("Person 1: ", frame.people[0].body_id);
           //console.log("Person 2: ", frame.people[1]?.body_id);
@@ -137,7 +137,9 @@
     
     events.forEach(event => {
         let eventDate = new Date(event.time);
+        console.log("eventDate: ", eventDate)
         let dateString = eventDate.toLocaleDateString(undefined, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+        console.log("dateString: ", dateString)
         let timeString = eventDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
         html += `<div class="card">
@@ -206,7 +208,7 @@
   // Handle user movement and state transitions
   function checkPosition() {
     //console.log(middleTimer, sideTimer, leftTimer, rightTimer)
-    console.log(eventsDatabase.events[0].name)
+    console.log(eventsDatabase.events[0].time)
     if (document.getElementById('circle').style.display === "none") {
       noUserTimer++;
     } else {
