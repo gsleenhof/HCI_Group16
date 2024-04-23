@@ -172,12 +172,32 @@
 
     console.log("filteredEvents: ", filteredEvents)
     // Select one event from each of the specified categories if available
-    const selectedEvents = categories.map(category => 
+
+    if (filteredEvents.length <= 3) {
+      console.log("selectedEvents: ", filteredEvents)
+      console.log("events: ", filteredEvents)
+    }
+
+    else {
+      let items = filteredEvents.slice();
+
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+
+      events = items.slice(0, 3);
+      console.log("selectedEvents: ", filteredEvents)
+      console.log("events: ", events)
+    }
+   /* const selectedEvents = categories.map(category => 
         filteredEvents.find(event => event.category === category)
     ).filter(event => event !== undefined); // Ensure we don't include undefined if no event is found in a category
+    
     console.log("selectedEvents: ", selectedEvents)
     events = selectedEvents.slice(0, 3); // Limit to 3 events
     console.log("events: ", events)
+    */
   }
 
 
