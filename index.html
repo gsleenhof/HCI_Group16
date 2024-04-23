@@ -6,6 +6,7 @@
 <title>Interactive Campus Events</title>
 <link rel="stylesheet" href="styles.css">
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script src="database.js"></script>
 <script>
   
@@ -136,6 +137,7 @@
     html += '<div class="card-container">';
     
     events.forEach(event => {
+
         let eventDate = new Date(event.time);
         console.log("eventDate: ", eventDate)
         let dateString = eventDate.toLocaleDateString(undefined, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
@@ -145,6 +147,7 @@
         html += `<div class="card">
                     <h3>${event.name}</h3>
                     <p>${dateString} at ${timeString}</p>
+                    <div id="qrcode${event.name.replace(/[^a-zA-Z0-9]/g, '')}"></div>
                     <p>Category: ${event.category}</p>
                 </div>`;
     });
@@ -155,6 +158,17 @@
     html += `<p>Quiz will restart automatically in 10 seconds</p>`;
 
     setContent(html);
+
+    events.forEach(event => {
+      var qrcode = new QRCode(document.getElementById(`qrcode${event.name.replace(/[^a-zA-Z0-9]/g, '')}`), {
+        text: event.link ? event.link : "google.com",
+        width: 128,
+        height: 128,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+      });
+    });
   }
 
   
