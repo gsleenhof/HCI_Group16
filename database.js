@@ -1,10 +1,10 @@
 const eventsDatabase = {
   events: [
-    { name: "Nontraditional PhD Careers Panel", onCampus: true , time: new Date('2024-05-01T18:00:00Z'), free: true, weekend: true, category: "Speaker Panel" },
-    { name: "Morning Roast featuring the Holy Ghost by Andover Newton Seminary", onCampus: true , time: new Date('2024-05-01T08:30:00Z') , free: true, weekend: true, category: "Cultural" },
+    { name: "Nontraditional PhD Careers Panel", onCampus: true , time: new Date('2024-05-01T18:00:00Z'), free: true, weekend: true, category: "Speaker Panel", link: "https://yaleconnect.yale.edu/GSASYBiolDiversityInclusionComm/rsvp_boot?id=2265636" },
+    { name: "Morning Roast featuring the Holy Ghost by Andover Newton Seminary", onCampus: true , time: new Date('2024-05-01T08:30:00Z') , free: true, weekend: true, category: "Cultural", link: "https://yaleconnect.yale.edu/YDSAndoverNewton/rsvp_boot?id=2267044" },
     { name: "Mother's Day Bag Packing", onCampus: true, time: new Date('2024-05-06T11:00:00Z') , free: true, weekend: false, category: "Community Service", link: "https://yaleconnect.yale.edu/AGYLNG/rsvp_boot?id=2271270"},
     { name: "Gardening Afternoon", onCampus: true, time: new Date('2024-04-28T16:00:00Z') , free: true, weekend: true, category: "Outdoor Community", link: "https://yaleconnect.yale.edu/GHWHKids/rsvp_boot?id=2270560"},
-    { name: "Basketball vs Brown University", onCampus: true , time: new Date('2024-04-27T11:30:00Z'), free: false, weekend: true, category: "Sports Game" },
+    { name: "Basketball vs Brown University", onCampus: true , time: new Date('2024-04-27T11:30:00Z'), free: false, weekend: true, category: "Sports Game", link: "https://docs.google.com/forms/d/e/1FAIpQLScqPNuSGDXLx9Q7xUybvVPx0RvzwQiHSD1seDGL7uPxC0w5lw/viewform" },
     { name: "EveryBody Dances with Rennie Harris Puremovement American Street Dance Theater", onCampus: true , time: new Date('2024-04-28T11:00:00Z') , free: true, weekend: true, category: "Workshop", link: "https://yaleconnect.yale.edu/SchwarzmanCenter/rsvp_boot?id=2270886"},
     { name: "Trip to a New York City Football Club Tailgate & Game at Yankees Stadium!", onCampus: true , time: new Date('2024-04-27T11:30:00Z'), free: false, weekend: true, category: "Sports", link: "https://www.eventbrite.com/e/trip-to-a-new-york-city-football-club-tailgate-game-at-yankees-stadium-tickets-876025454717?aff=oddtdtcreator"},
     { name: "Yale Symphony Orchestra Concert 5", onCampus: true , time: new Date('2024-04-28T21:00:00Z') , free: true, weekend: true, category: "Performance", link: "https://yso.yalecollege.yale.edu/upcoming-concerts"},
