@@ -1,6 +1,6 @@
 const eventsDatabase = {
     events: [
-      { name: "Nontraditional PhD Careers Panel", onCampus: true , time: Date('2024-05-01T18:00:00Z'), free: true, weekend: true, category: "Cultural" },
+      { name: "Nontraditional PhD Careers Panel", onCampus: true , time: Date('2024-05-01T18:00:00Z'), free: true, weekend: true, category: "Speaker Event" },
       { name: "Morning Roast featuring the Holy Ghost by Andover Newton Seminary", onCampus: true , time: Date('2024-05-01T8:30:00Z') , free: true, weekend: true, category: "Cultural" },
       { name: "South Asian Studies Council Chai", onCampus: true, time: Date('2024-04-25T4:30:00Z') , free: true, weekend: false, category: "Cultural" },
       { name: "Cena a las Seis ft. Giuliana Duron", onCampus: false , time: Date('2024-04-25T18:00:00Z') , free: true, weekend: false, category: "Cultural", link: "https://yaleconnect.yale.edu/LaCasa/rsvp_boot?id=2241900" },
@@ -16,7 +16,7 @@ const eventsDatabase = {
 
 
       { name: "Basketball vs Brown University", onCampus: true , time: Date('2024-04-27T11:30:00Z'), free: false, weekend: true, category: "Sports" },
-      { name: "Trip to a New York City Fo,,otball Club Tailgate & Game at Yankees Stadium!", onCampus: true , time: Date('2024-04-27T11:30:00Z'), free: false, weekend: true, category: "Sports", link: "https://www.eventbrite.com/e/trip-to-a-new-york-city-football-club-tailgate-game-at-yankees-stadium-tickets-876025454717?aff=oddtdtcreator"},
+      { name: "Trip to a New York City Football Club Tailgate & Game at Yankees Stadium!", onCampus: true , time: Date('2024-04-27T11:30:00Z'), free: false, weekend: true, category: "Sports", link: "https://www.eventbrite.com/e/trip-to-a-new-york-city-football-club-tailgate-game-at-yankees-stadium-tickets-876025454717?aff=oddtdtcreator"},
       
       
       { name: "Rangeela Showcase 2024", onCampus: true , time: Date('2024-04-26T20:00:00Z') , free: true, weekend: false, category: "Performance", link: "https://yaleconnect.yale.edu/YCRangeela/rsvp_boot?id=2270082"},
