@@ -46,7 +46,7 @@
           //console.log("Person 1 Confidence: ", frame.people[0].joints[3].confidence);
           //console.log("Person 1: ", frame.people[0].body_id);
           //console.log("Person 2: ", frame.people[1]?.body_id);
-          document.getElementById('circle').style.display = "block";
+          if (currentState != 'summary') document.getElementById('circle').style.display = "block";
           //var person = frame.people[0];
           var x = person.x_pos;
           positions.push(x); // Add the new position
@@ -104,6 +104,7 @@
     userAnswers = { weekdayOrWeekend: null, onCampus: null };
     events = [];
     resetTimers();
+    document.getElementById('circle').style.display = "block"
     displayTitleScreen();
   }
   
@@ -133,6 +134,7 @@
   }
   
   function displaySummaryScreen() {
+    document.getElementById('circle').style.display = "none";
     let html = '<h1>Summary of Your Answers</h1>';
     html += '<h2>Scan the QR codes to save the info!</h2>'
     html += '<div class="card-container">';
@@ -218,7 +220,7 @@
   function checkPosition() {
     //console.log(middleTimer, sideTimer, leftTimer, rightTimer)
     console.log(eventsDatabase.events[0].time)
-    if (document.getElementById('circle').style.display === "none") {
+    if (document.getElementById('circle').style.display === "none" && currentState != 'summary') {
       noUserTimer++;
     } else {
       noUserTimer = 0;
@@ -371,10 +373,8 @@
   setInterval(function() {
     checkPosition();
     if (currentState != 'summary') { 
-      document.getElementById('circle').style.display = "block";
       updateCircleContent((10 - Math.max(middleTimer, sideTimer, leftTimer, rightTimer)).toString())
     } else {
-      document.getElementById('circle').style.display = "none";
       document.getElementById('summaryTimer').textContent = `Quiz will restart automatically in ${20 - summaryTimer} seconds`
     }
   }, 1000);
