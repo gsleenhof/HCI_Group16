@@ -10,7 +10,7 @@ const eventsDatabase = {
     { name: "Yale Symphony Orchestra Concert 5", onCampus: true , time: new Date('2024-04-28T21:00:00Z') , free: true, weekend: true, category: "Performance", link: "https://yso.yalecollege.yale.edu/upcoming-concerts"},
 
     
-    { name: "South Asian Studies Council Chai", onCampus: true, time: new Date('2024-04-25T04:30:00Z') , free: true, weekend: false, category: "Cultural" },
+    { name: "South Asian Studies Council Chai", onCampus: true, time: new Date('2024-04-25T04:30:00Z') , free: true, weekend: false, category: "Cultural", link: "https://southasia.macmillan.yale.edu/event/south-asian-studies-council-chai"},
     { name: "AI in Medicine Monthly Seminar - Dr. Hua Xu", onCampus: true , time: new Date('2024-04-25T01:00:00Z') , free: true, weekend: false, category: "Speaker Event", link: "https://yaleconnect.yale.edu/AIM/rsvp_boot?id=2270961"},
     { name: "Disability Peer Mentor Programming Book Club", onCampus: true, time: new Date('2024-04-26T15:00:00Z') , free: true, weekend: false, category: "Community", link: "https://yaleconnect.yale.edu/DPMP/rsvp_boot?id=2268949"},
     { name: "Rangeela Showcase 2024", onCampus: true , time: new Date('2024-04-26T20:00:00Z') , free: true, weekend: false, category: "Cultural Performance", link: "https://yaleconnect.yale.edu/YCRangeela/rsvp_boot?id=2270082"},
