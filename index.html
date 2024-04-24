@@ -134,6 +134,7 @@
   
   function displaySummaryScreen() {
     let html = '<h1>Summary of Your Answers</h1>';
+    html += '<h2>Scan the QR codes to save the info!</h2>'
     html += '<div class="card-container">';
     
     events.forEach(event => {
@@ -147,15 +148,13 @@
         html += `<div class="card">
                     <h3>${event.name}</h3>
                     <p>${dateString} at ${timeString}</p>
-                    <div id="qrcode${event.name.replace(/[^a-zA-Z0-9]/g, '')}"></div>
+                    <div id="qrcode${event.name.replace(/[^a-zA-Z0-9]/g, '')}" class="qrcode-container"></div>
                     <p>Category: ${event.category}</p>
                 </div>`;
     });
 
     html += '</div>'; // Close card-container
-    html += '<p>Restart the quiz by moving out of answer range</p>';
-    html += '<p>-OR-</p>';
-    html += `<p>Quiz will restart automatically in 10 seconds</p>`;
+    html += `<p id="summaryTimer">Quiz will restart automatically in 20 seconds</p>`;
 
     setContent(html);
 
@@ -225,7 +224,7 @@
       noUserTimer = 0;
     }
 
-    if (noUserTimer >= 3) {
+    if (noUserTimer >= 5) {
       resetToTitle();
       return
     }
@@ -237,7 +236,7 @@
       noUserTimer = 0;
     }
 
-    if (summaryTimer >= 10) {
+    if (summaryTimer >= 20) {
       resetToTitle();
       return
     }
@@ -247,7 +246,7 @@
         if (circlePosition >= 30 && circlePosition <= 70) {
           sideTimer = 0;
           middleTimer++;
-          if (middleTimer >= 5) {
+          if (middleTimer >= 10) {
             currentState = 'instructions';
             displayInstructionsScreen();
             resetTimers();
@@ -261,7 +260,7 @@
           leftTimer++;
           rightTimer = 0;
           sideTimer = 0;
-          if (leftTimer >= 5) {
+          if (leftTimer >= 10) {
             currentState = 'question1';
             displayQuestion1Screen();
             resetTimers();
@@ -270,14 +269,14 @@
           rightTimer++;
           leftTimer = 0;
           sideTimer = 0;
-          if (rightTimer >= 5) {
+          if (rightTimer >= 10) {
             resetToTitle();
           }
         } else {
           sideTimer++;
           leftTimer = 0;
           rightTimer = 0;
-          if (sideTimer >= 5) {
+          if (sideTimer >= 10) {
             resetToTitle();
           }
         }
@@ -287,7 +286,7 @@
           leftTimer++;
           rightTimer = 0;
           sideTimer = 0;
-          if (leftTimer >= 5) {
+          if (leftTimer >= 10) {
             userAnswers = { ...userAnswers, weekdayOrWeekend: 'weekday' };
             currentState = 'question2';
             displayQuestion2Screen();
@@ -297,7 +296,7 @@
           rightTimer++;
           leftTimer = 0;
           sideTimer = 0;
-          if (rightTimer >= 5) {
+          if (rightTimer >= 10) {
             userAnswers = { ...userAnswers, weekdayOrWeekend: 'weekend' };
             currentState = 'question2';
             displayQuestion2Screen();
@@ -307,7 +306,7 @@
           sideTimer++;
           leftTimer = 0;
           rightTimer = 0;
-          if (sideTimer >= 5) {
+          if (sideTimer >= 10) {
             resetToTitle();
           }
         }
@@ -317,7 +316,7 @@
           leftTimer++;
           rightTimer = 0;
           sideTimer = 0;
-          if (leftTimer >= 5) {
+          if (leftTimer >= 10) {
             userAnswers = { ...userAnswers, onCampus: true };
             currentState = 'summary';
             getMatchingEvents();
@@ -328,7 +327,7 @@
           rightTimer++;
           leftTimer = 0;
           sideTimer = 0;
-          if (rightTimer >= 5) {
+          if (rightTimer >= 10) {
             userAnswers = { ...userAnswers, onCampus: false };
             currentState = 'summary';
             getMatchingEvents();
@@ -339,7 +338,7 @@
           sideTimer++;
           leftTimer = 0;
           rightTimer = 0;
-          if (sideTimer >= 5) {
+          if (sideTimer >= 10) {
             resetToTitle();
           }
         }
@@ -349,7 +348,7 @@
           sideTimer++;
           leftTimer = 0;
           rightTimer = 0;
-          if (sideTimer >= 5) {
+          if (sideTimer >= 10) {
             resetToTitle();
           }
         } else {
@@ -371,7 +370,13 @@
   
   setInterval(function() {
     checkPosition();
-    updateCircleContent(Math.max(middleTimer, sideTimer, leftTimer, rightTimer).toString());
+    if (currentState != 'summary') { 
+      document.getElementById('circle').style.display = "block";
+      updateCircleContent((10 - Math.max(middleTimer, sideTimer, leftTimer, rightTimer)).toString())
+    } else {
+      document.getElementById('circle').style.display = "none";
+      document.getElementById('summaryTimer').textContent = `Quiz will restart automatically in ${20 - summaryTimer} seconds`
+    }
   }, 1000);
   
   function moveCircle(position) {
